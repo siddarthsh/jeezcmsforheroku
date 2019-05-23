@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/theme.min.css">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
+    <link rel="stylesheet" href="/fonts/feather/feather.min.css">
+    <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
+    <script src="/libs/jquery/dist/jquery.min.js"></script>
+
+    <script>
+      const quickbarsClassicConfig = {
+        selector: 'textarea.tinymce',
+        plugins: 'quickbars link code',
+        toolbar: 'quickbars code',
+        menubar: 'view insert tools custom',
+        link_quicklink: true,
+        height: 600,
+        setup: (ed) => {
+          ed.on('init', () => {
+            ed.hasVisual = true;
+            ed.addVisual();
+          });
+
+          ed.on('init', () => {
+            ed.setContent('<h1>Heading</h1><p><a name="anchor1"></a>anchor here.');
+          });
+        }
+      };
+
+      const dfreeHeaderConfig = {
+        selector: '.dfree-header',
+        plugins: [ 'quickbars' ],
+        toolbar: false,
+        menubar: false,
+        inline: true,
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote'
+      };
+
+      const dfreeBodyConfig = {
+        selector: '.dfree-body',
+        menubar: false,
+        inline: true,
+        plugins: [
+          'autolink',
+          'contextmenu',
+          'link',
+          'lists',
+          'table',
+          'textcolor',
+          'image',
+          'quickbars',
+          'code'
+        ],
+        toolbar: false,
+        quickbars_insert_toolbar: 'quicktable image',
+        quickbars_selection_toolbar: 'bold italic | h2 h3 | blockquote quicklink',
+        contextmenu: 'inserttable deletetable | code',
+      };
+
+      tinymce.init(quickbarsClassicConfig);
+      tinymce.init(dfreeHeaderConfig);
+      tinymce.init(dfreeBodyConfig);
+
+     </script>
+
+    <style>
+    .mce-notification,.tox-notifications-container,.tox-statusbar,.mce-statusbar {
+      display: none !important;
+    }
+    </style>
+  </head>
+
+  <body style="display: block;">
+
+    <nav class="navbar navbar-expand-lg navbar-light" id="topnav">
+        <div class="container">
+          <div>
+          <a href="/"> JeezCMS </a>
+
+          @if(pageid == "createposts")
+          | Draft
+          @endif
+          @if(pageid == "settings")
+          | Settings
+          @endif
+          @if(pageid == "login")
+          | Sign In
+          @endif
+          @if(pageid == "signup")
+          | Getting Started
+          @endif
+          @if(pageid == "viewusers")
+          | All Users
+          @endif
+          @if(pageid == "viewposts")
+          | Your Posts
+          @endif
+          @if(pageid == "forgotpassword")
+          | Forgot Password
+          @endif
+          </div>
+          
+          <div class="flex">
+          @if(pageid == "createposts")
+         <input type="button" class="btn btn-primary" name="answer" value="Ready to Publish?" onclick="publishPost()" />
+          @endif
+         @if(user.id)
+         <div id="navbar-user" class="navbar-user pl-4" >
+            <div class="dropdown">
+        
+              <a href="#" class="avatar avatar-sm dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="/img/demo/sal.jpg" alt="..." class="avatar-img rounded-circle">
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right">
+                @if((user.level == "Moderator") || (user.level == "Admin"))
+                <a href="/me/posts/new" class="dropdown-item">New post</a>
+                <a href="/me/posts" class="dropdown-item">Posts</a>
+                <hr class="dropdown-divider">
+                @endif
+                @if(user.level == "Admin")
+                <a href="/admin/users" class="dropdown-item">Users</a>
+                <hr class="dropdown-divider">
+                @endif
+                <a href="/u/{{user.username}}" class="dropdown-item">Profile</a>
+                <a href="/me/settings" class="dropdown-item">Settings</a>
+                <a href="/logout" class="dropdown-item">Sign out</a>
+              </div>
+
+            </div>
+
+          </div>       
+        </div>
+        @else
+        <div class="getting-started">
+        <a class="btn btn-white" href="/login" style="margin-right:5px;">Sign In</a>
+        <a class="btn btn-primary float-right" href="/signup">Get Started</a>
+        </div>
+        @endif
+        </div>
+      </nav>
+
+    <div class="main-content bg-fixed-bottom ">
+
+
+
+
+@!section('content')
+
+
+
+
+<script src="/js/theme.min.js"></script>
+<script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/plugins/readingtime.js"></script>
+<script>
+$('.article-post').readingTime();
+</script>
+
+<style>
+#final-edits {
+  display:none;
+  position: fixed;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999990;
+    background-color: rgb(255,255,255);
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  
+  
+}
+</style>
+<script>
+function publishPost() {
+   document.getElementById('final-edits').style.display = "block";
+}
+function hidePublishPost() {
+   document.getElementById('final-edits').style.display = "none";
+}
+$("#temp-title").keyup(function(){
+    update();
+});
+
+function update() {
+  $("#result-title").val($('#temp-title').val());
+}
+</script>
+
+  </body>
+</html>

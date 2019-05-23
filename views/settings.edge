@@ -1,0 +1,76 @@
+@layout('layouts.admin')
+
+@section('content')
+
+
+
+<div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-5 col-xl-4 my-5">
+
+          <!-- Form -->
+          <form action="/me/profile/edit/store" method="POST" encType="multipart/form-data">
+
+                        <!-- ID -->
+            <div class="form-group" style="display:none;" >
+
+
+              <!-- Input -->
+              <input type="text" value="{{user._id}}" name="id" class="form-control" readonly>
+
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+
+              <!-- Label -->
+              <label>Display Name</label>
+
+              <!-- Input -->
+              <input type="text" value="{{user.username}}" name="username" class="form-control" readonly>
+
+            </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+
+                          <!-- Label -->
+                          <label>Email</label>
+
+                          <!-- Input -->
+                          <input type="email" value="{{user.email}}" placeholder="Enter your email" name="email" class="form-control" readonly>
+
+                        </div>
+
+            <!-- Description -->
+            <div class="form-group">
+
+              <!-- Label -->
+              <label>Description</label>
+
+              <!-- Input -->
+              <input type="text" value="{{user.description}}" name="description" class="form-control">
+
+            </div>
+
+            
+
+
+
+
+
+            <!-- Submit -->
+            <button class="btn btn-lg btn-block btn-primary mb-3">
+              Save Details
+            </button>
+
+
+          </form>
+
+        </div>
+      </div> <!-- / .row -->
+    </div>
+
+
+    
+@endsection
